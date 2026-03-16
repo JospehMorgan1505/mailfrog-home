@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Mailfrog | ICP-First Outbound Platform</title>
+  <meta name="description" content="Simple, transparent pricing for every stage of your outbound journey. Start free, scale when you're ready." />
+  <link rel="canonical" href="https://mailfrog.io/pricing" />
+  <link rel="icon" type="image/png" href="/assets/images/mailfrog-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <style>
+    :root {
+      --bg:        #ffffff;
+      --fg:        #1f1f1f;
+      --primary:   #4671f5;
+      --accent:    #fbe64c;
+      --accent-fg: #1f1f1f;
+      --dark:      #1f1f1f;
+      --muted-bg:  #f4f4f5;
+      --muted:     #71717a;
+      --border:    #e4e4e7;
+      --r-lg:      24px;
+      --r-xl:      40px;
+      --font:      'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── HEADER (same as main site) ── */
+    .header-wrap {
+      position: fixed; top: 0; left: 0; right: 0;
+      padding: 18px 24px; z-index: 200; pointer-events: none;
+    }
+    .header {
+      max-width: 1200px; margin: 0 auto;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 100px; padding: 10px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.05);
+      pointer-events: auto;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-name { font-weight: 800; font-size: 19px; letter-spacing: -0.5px; }
+    .header nav { display: flex; gap: 28px; }
+    .header nav a { color: var(--muted); font-size: 14px; font-weight: 600; transition: color .2s; }
+    .header nav a:hover, .header nav a.active { color: var(--fg); }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: 7px; border-radius: 100px; font-weight: 600; font-size: 14px; padding: 9px 20px; cursor: pointer; font-family: var(--font); transition: transform .22s, opacity .22s; }
+    .btn:hover { transform: scale(1.04); }
+    .btn-ghost  { background: none; color: var(--fg); border: none; }
+    .btn-dark   { background: var(--dark); color: #fff; }
+    .btn-primary {
+      background: var(--primary); color: #fff; font-size: 15px; padding: 15px 32px;
+      position: relative; overflow: hidden; isolation: isolate;
+    }
+    .btn-primary .btn-fill {
+      position: absolute; inset: 0; border-radius: inherit;
+      background: #3560e8; transform: scaleX(0); transform-origin: left;
+      transition: transform .35s cubic-bezier(.4,0,.2,1); z-index: -1;
+    }
+    .btn-primary:hover .btn-fill { transform: scaleX(1); }
+    .btn-outline { background: #fff; color: var(--fg); border: 1px solid var(--border); font-size: 15px; padding: 15px 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+    /* hamburger */
+    .hamburger {
+      display: none; width: 36px; height: 36px; border-radius: 10px;
+      background: var(--muted-bg); border: 1px solid var(--border);
+      align-items: center; justify-content: center;
+      cursor: pointer; flex-direction: column; gap: 5px; padding: 8px;
+    }
+    .ham-line { width: 100%; height: 2px; background: var(--fg); border-radius: 2px; display: block; transition: transform .3s, opacity .3s; }
+    .hamburger.open .ham-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open .ham-line:nth-child(2) { opacity: 0; }
+    .hamburger.open .ham-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(24px);
+      z-index: 190; flex-direction: column; justify-content: center; align-items: center; gap: 8px;
+      padding: 100px 24px 40px; opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu a { font-size: 22px; font-weight: 800; color: var(--fg); letter-spacing: -0.02em; padding: 12px 0; text-align: center; display: block; transition: color .2s; }
+    .mobile-menu a:hover { color: var(--primary); }
+    .mob-divider { width: 40px; height: 1px; background: var(--border); margin: 8px 0; }
+    .mob-btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; margin-top: 16px; }
+    .mob-btns .btn { width: 100%; justify-content: center; }
+    @media (max-width: 900px) {
+      .hamburger { display: flex; }
+      .header-actions .btn-dark { display: none; }
+      .header nav { display: none; }
+    }
+    @media (max-width: 540px) { .header-actions .btn-ghost { display: none; } }
+
+    /* ── PAGE HERO ── */
+    .pricing-hero {
+      padding: 160px 24px 80px;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 50% at 50% -5%, #ededef 0%, #fff 65%);
+      position: relative; overflow: hidden;
+    }
+    .pricing-hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--accent); color: var(--accent-fg);
+      padding: 7px 16px; border-radius: 100px;
+      font-weight: 700; font-size: 13px; margin-bottom: 28px;
+      box-shadow: 0 4px 14px rgba(251,230,76,.35);
+    }
+    .pricing-hero h1 {
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 800; letter-spacing: -0.04em; line-height: 1.06;
+      margin-bottom: 20px;
+    }
+    .pricing-hero p {
+      font-size: clamp(16px, 1.8vw, 19px); color: var(--muted);
+      max-width: 560px; margin: 0 auto; line-height: 1.6;
+    }
+
+    /* ── PRICING GRID ── */
+    .pricing-section { padding: 40px 24px 100px; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .plan-card {
+      border-radius: var(--r-lg);
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+    .plan-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(0,0,0,.09);
+    }
+
+    /* Free */
+    .plan-free {
+      background: var(--muted-bg);
+      border: 1px solid var(--border);
+    }
+    /* Starter */
+    .plan-starter {
+      background: var(--dark);
+      color: #fff;
+    }
+    /* Scale — featured */
+    .plan-scale {
+      background: var(--primary);
+      color: #fff;
+    }
+    .plan-scale::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.18) 0%, transparent 70%);
+      pointer-events: none;
+      animation: orb-drift 7s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(-20px,20px) scale(1.1); }
+    }
+
+    .plan-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; padding: 5px 12px; border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .badge-free    { background: rgba(0,0,0,.06); color: var(--muted); }
+    .badge-starter { background: rgba(251,230,76,.2); color: var(--accent); }
+    .badge-scale   { background: rgba(255,255,255,.2); color: #fff; }
+
+    .plan-name {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .plan-tagline {
+      font-size: 13px; line-height: 1.55; margin-bottom: 28px;
+    }
+    .plan-free .plan-tagline    { color: var(--muted); }
+    .plan-starter .plan-tagline { color: rgba(255,255,255,.6); }
+    .plan-scale .plan-tagline   { color: rgba(255,255,255,.85); }
+
+    .plan-price {
+      display: flex; align-items: baseline; gap: 4px;
+      margin-bottom: 32px;
+    }
+    .price-currency { font-size: 20px; font-weight: 700; margin-top: 6px; }
+    .price-amount   { font-size: 52px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+    .price-period   { font-size: 14px; font-weight: 600; opacity: .65; align-self: flex-end; margin-bottom: 4px; }
+
+    .plan-divider { height: 1px; margin-bottom: 28px; }
+    .plan-free    .plan-divider { background: var(--border); }
+    .plan-starter .plan-divider { background: rgba(255,255,255,.12); }
+    .plan-scale   .plan-divider { background: rgba(255,255,255,.2); }
+
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+    .plan-features li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 14px; font-weight: 500; line-height: 1.4;
+    }
+    .feat-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .plan-free    .feat-icon { background: rgba(0,0,0,.06); color: var(--fg); }
+    .plan-starter .feat-icon { background: rgba(255,255,255,.12); color: #fff; }
+    .plan-scale   .feat-icon { background: rgba(255,255,255,.2);  color: #fff; }
+
+    .feat-disabled { opacity: .38; }
+
+    .plan-cta {
+      width: 100%; padding: 14px 24px; border-radius: 100px;
+      font-size: 14px; font-weight: 700; font-family: var(--font);
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: transform .22s, background .22s, box-shadow .22s;
+      border: none;
+    }
+    .plan-cta:hover { transform: scale(1.03); }
+    .cta-free    { background: var(--fg); color: #fff; }
+    .cta-free:hover { background: #333; }
+    .cta-starter { background: var(--accent); color: var(--fg); }
+    .cta-starter:hover { background: #f5d800; box-shadow: 0 8px 24px rgba(251,230,76,.4); }
+    .cta-scale   { background: #fff; color: var(--primary); }
+    .cta-scale:hover { background: #f0f4ff; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+
+    /* current plan badge on scale */
+    .current-pill {
+      position: absolute; top: 18px; right: 18px;
+      background: var(--accent); color: var(--fg);
+      font-size: 10px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1px; padding: 5px 12px; border-radius: 100px;
+    }
+
+    /* ── COMPARE TABLE ── */
+    .compare-section { padding: 0 24px 100px; }
+    .compare-inner { max-width: 860px; margin: 0 auto; }
+    .compare-title {
+      font-size: clamp(22px, 3.5vw, 36px); font-weight: 800;
+      letter-spacing: -0.03em; text-align: center; margin-bottom: 48px; line-height: 1.1;
+    }
+
+    .compare-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      border: 1px solid var(--border); border-radius: var(--r-lg);
+      overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.04);
+    }
+    .compare-table th, .compare-table td {
+      padding: 16px 24px; text-align: center; font-size: 14px;
+    }
+    .compare-table th:first-child, .compare-table td:first-child {
+      text-align: left; font-weight: 600;
+    }
+    .compare-table thead th {
+      background: var(--muted-bg); font-weight: 800; font-size: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table thead th:nth-child(4) { background: var(--primary); color: #fff; }
+    .compare-table tbody tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+    .compare-table tbody tr:hover td { background: #fafafa; }
+    .compare-table tbody tr:hover td:nth-child(4) { background: rgba(70,113,245,.06); }
+    .compare-table td:nth-child(4) { background: rgba(70,113,245,.04); font-weight: 600; color: var(--primary); }
+
+    .check-yes { color: #22c55e; font-size: 17px; }
+    .check-no  { color: #d1d5db; font-size: 17px; }
+
+    /* ── FAQ MINI ── */
+    .pricing-faq { padding: 0 24px 80px; }
+    .pfaq-inner  { max-width: 740px; margin: 0 auto; }
+    .pfaq-title  { font-size: clamp(22px, 3vw, 32px); font-weight: 800; letter-spacing: -0.03em; text-align: center; margin-bottom: 40px; }
+    .pfaq-list   { display: flex; flex-direction: column; gap: 0; }
+    .pfaq-item   { border-bottom: 1px solid var(--border); overflow: hidden; }
+    .pfaq-item:first-child { border-top: 1px solid var(--border); }
+    .pfaq-question {
+      width: 100%; background: none;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0; font-size: 15px; font-weight: 700; color: var(--fg);
+      text-align: left; cursor: pointer; gap: 16px; transition: color .2s;
+    }
+    .pfaq-question:hover { color: var(--primary); }
+    .pfaq-icon {
+      width: 26px; height: 26px; border-radius: 50%; background: var(--muted-bg);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: background .25s, transform .35s;
+    }
+    .pfaq-item.open .pfaq-icon { background: var(--primary); transform: rotate(45deg); }
+    .pfaq-item.open .pfaq-icon iconify-icon { color: #fff; }
+    .pfaq-answer { max-height: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.4,0,.2,1); }
+    .pfaq-answer-inner { padding-bottom: 20px; font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .pfaq-item.open .pfaq-answer { max-height: 200px; }
+
+    /* ── FOOTER CTA ── */
+    .footer-section { padding: 0 24px 24px; background: #fafafa; }
+    .footer-inner {
+      background: var(--dark); border-radius: var(--r-xl);
+      padding: 80px 56px 40px; color: #fff; text-align: center;
+    }
+    .footer-inner h2 { font-size: clamp(26px, 4.5vw, 52px); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 18px; line-height: 1.1; }
+    .footer-sub { font-size: 16px; color: #a1a1aa; max-width: 520px; margin: 0 auto 40px; line-height: 1.6; }
+    .footer-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+    .btn-cta { font-size: 17px; padding: 18px 36px; }
+    .btn-ghost-dark {
+      background: rgba(255,255,255,.06); color: #fff;
+      border: 1px solid rgba(255,255,255,.2); font-size: 17px;
+      padding: 18px 36px; border-radius: 100px; font-weight: 600;
+      font-family: var(--font); cursor: pointer; transition: background .25s;
+    }
+    .btn-ghost-dark:hover { background: rgba(255,255,255,.12); }
+    .footer-bottom-bar {
+      border-top: 1px solid rgba(255,255,255,.1); padding-top: 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-brand-compact { display: flex; align-items: center; gap: 16px; }
+    .footer-brand-compact .logo-name { font-weight: 800; font-size: 17px; letter-spacing: -0.4px; color: #fff; }
+    .footer-brand-compact p { font-size: 13px; color: #71717a; }
+    .footer-nav-compact { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+    .footer-nav-compact a { color: #71717a; font-size: 13px; font-weight: 600; transition: color .2s; }
+    .footer-nav-compact a:hover { color: #fff; }
+    .footer-copy { color: #52525b; font-size: 12px; }
+    @media (max-width: 700px) {
+      .footer-bottom-bar { flex-direction: column; align-items: flex-start; }
+      .footer-inner { padding: 64px 24px 36px; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .compare-table th, .compare-table td { padding: 12px 14px; font-size: 13px; }
+    }
+    @media (max-width: 540px) {
+      .footer-btns { flex-direction: column; align-items: center; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(30px); }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header-wrap">
+    <header class="header">
+      <div class="logo">
+        <img src="/assets/images/mailfrog-final-logo.png" alt="Mailfrog logo" width="150">
+      </div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/#problem">The Problem</a>
+        <a href="/#how-it-works">How it works</a>
+        <a href="/pricing" class="active">Pricing</a>
+      </nav>
+      <div class="header-actions">
+        <a href="https://app.mailfrog.io/" class="btn btn-ghost">Log in</a>
+        <a href="https://app.mailfrog.io/auth/signup" class="btn btn-dark">Get started free</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="/">Home</a>
+    <a href="/#problem">The Problem</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/pricing">Pricing</a>
+    <div class="mob-divider"></div>
+    <div class="mob-btns">
+      <a href="https://app.mailfrog.io/" class="btn btn-dark">Log in</a>
+      <a href="https://app.mailfrog.io/auth/signup" class="btn btn-primary"><span class="btn-fill"></span>Get started free</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="pricing-hero">
+    <div class="container">
+      <div class="eyebrow reveal">
+        <iconify-icon icon="lucide:layers" style="font-size:13px"></iconify-icon>
+        Available Plans
+      </div>
+      <h1 class="reveal">Compare plans &amp;<br>request a change.</h1>
+      <p class="reveal">Start free. Scale when you're ready. No hidden fees, no feature traps.</p>
+    </div>
+  </section>
+
+  <!-- PRICING CARDS -->
+  <section class="pricing-section">
+    <div class="container">
+      <div class="pricing-grid">
+
+        <!-- FREE TRIAL -->
+        <div class="plan-card plan-free reveal">
+          <div class="plan-badge badge-free">
+            <iconify-icon icon="lucide:gift" style="font-size:11px"></iconify-icon>
+            Free Trial
+          </div>
+          <p class="plan-name">Free Trial</p>
+          <p class="plan-tagline">15-day free trial with limited features. No credit card required.</p>
+          <div class="plan-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount">0</span>
+            <span class="price-period">/mo</span>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:mail" style="font-size:12px"></iconify-icon></span>
+              1 Email Account
+            </li>
+            <li class="feat-disabled">
+              <span class="feat-icon"><iconify-icon icon="lucide:users" style="font-size:12px"></iconify-icon></span>
+              0 Team Members
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:sparkles" style="font-size:12px"></iconify-icon></span>
+              10 AI Actions / Day
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:database" style="font-size:12px"></iconify-icon></span>
+              50 Contact Imports
+            </li>
+            <li class="feat-disabled">
+              <span class="feat-icon"><iconify-icon icon="lucide:flame" style="font-size:12px"></iconify-icon></span>
+              Warmup: Disabled
+            </li>
+          </ul>
+          <button class="plan-cta cta-free" onclick="window.location.href='https://app.mailfrog.io/auth/signup'">
+            Start Free Trial
+            <iconify-icon icon="lucide:arrow-right" style="font-size:14px"></iconify-icon>
+          </button>
+        </div>
+
+        <!-- STARTER -->
+        <div class="plan-card plan-starter reveal">
+          <div class="plan-badge badge-starter">
+            <iconify-icon icon="lucide:zap" style="font-size:11px"></iconify-icon>
+            Starter
+          </div>
+          <p class="plan-name">Starter</p>
+          <p class="plan-tagline">1 user, 1 email account included, 30 AI actions/day to kick off outbound.</p>
+          <div class="plan-price">
+            <span class="price-currency" style="color:rgba(255,255,255,.7)">$</span>
+            <span class="price-amount">49</span>
+            <span class="price-period">/mo</span>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:mail" style="font-size:12px"></iconify-icon></span>
+              1 Email Account
+            </li>
+            <li class="feat-disabled">
+              <span class="feat-icon"><iconify-icon icon="lucide:users" style="font-size:12px"></iconify-icon></span>
+              0 Team Members
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:sparkles" style="font-size:12px"></iconify-icon></span>
+              30 AI Actions / Day
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:database" style="font-size:12px"></iconify-icon></span>
+              Unlimited Contact Imports
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:flame" style="font-size:12px"></iconify-icon></span>
+              Warmup: Enabled
+            </li>
+          </ul>
+          <button class="plan-cta cta-starter" onclick="window.location.href='https://app.mailfrog.io/auth/signup'">
+            Request Downgrade
+            <iconify-icon icon="lucide:arrow-right" style="font-size:14px"></iconify-icon>
+          </button>
+        </div>
+
+        <!-- SCALE -->
+        <div class="plan-card plan-scale reveal">
+          <span class="current-pill">Current Plan</span>
+          <div class="plan-badge badge-scale">
+            <iconify-icon icon="lucide:rocket" style="font-size:11px"></iconify-icon>
+            Scale
+          </div>
+          <p class="plan-name">Scale</p>
+          <p class="plan-tagline">1 main user + 2 team members, unlimited AI, add-ons available.</p>
+          <div class="plan-price">
+            <span class="price-currency" style="color:rgba(255,255,255,.7)">$</span>
+            <span class="price-amount">199</span>
+            <span class="price-period">/mo</span>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:mail" style="font-size:12px"></iconify-icon></span>
+              1 Email Account
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:users" style="font-size:12px"></iconify-icon></span>
+              2 Team Members
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:sparkles" style="font-size:12px"></iconify-icon></span>
+              50 AI Actions / Day
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:database" style="font-size:12px"></iconify-icon></span>
+              Unlimited Contact Imports
+            </li>
+            <li>
+              <span class="feat-icon"><iconify-icon icon="lucide:flame" style="font-size:12px"></iconify-icon></span>
+              Warmup: Enabled
+            </li>
+          </ul>
+          <button class="plan-cta cta-scale" onclick="window.location.href='https://app.mailfrog.io/auth/signup'">
+            Request Downgrade
+            <iconify-icon icon="lucide:arrow-right" style="font-size:14px"></iconify-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE TABLE -->
+  <section class="compare-section">
+    <div class="compare-inner">
+      <h2 class="compare-title reveal">Full plan comparison</h2>
+      <table class="compare-table reveal">
+        <thead>
+          <tr>
+            <th style="text-align:left">Feature</th>
+            <th>Free Trial</th>
+            <th>Starter</th>
+            <th>Scale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Email Accounts</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Team Members</td>
+            <td>—</td>
+            <td>—</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>AI Actions / Day</td>
+            <td>10</td>
+            <td>30</td>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td>Contact Imports</td>
+            <td>50</td>
+            <td>Unlimited</td>
+            <td>Unlimited</td>
+          </tr>
+          <tr>
+            <td>Email Warmup</td>
+            <td><iconify-icon icon="lucide:x" class="check-no"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+          </tr>
+          <tr>
+            <td>Multi-Step Sequences</td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+          </tr>
+          <tr>
+            <td>Custom Data Engine</td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+          </tr>
+          <tr>
+            <td>ICP Builder</td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+          </tr>
+          <tr>
+            <td>Add-on Support</td>
+            <td><iconify-icon icon="lucide:x" class="check-no"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:x" class="check-no"></iconify-icon></td>
+            <td><iconify-icon icon="lucide:check" class="check-yes"></iconify-icon></td>
+          </tr>
+          <tr>
+            <td>Trial Duration</td>
+            <td>15 days</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PRICING FAQ -->
+  <section class="pricing-faq">
+    <div class="pfaq-inner">
+      <h2 class="pfaq-title reveal">Pricing questions</h2>
+      <div class="pfaq-list">
+        <div class="pfaq-item reveal">
+          <button class="pfaq-question" aria-expanded="false">
+            Can I upgrade or downgrade at any time?
+            <span class="pfaq-icon"><iconify-icon icon="lucide:plus" style="font-size:13px"></iconify-icon></span>
+          </button>
+          <div class="pfaq-answer"><div class="pfaq-answer-inner">Yes. You can request a plan change at any time from your account dashboard. Downgrades take effect at the end of your current billing cycle, and upgrades are applied immediately.</div></div>
+        </div>
+        <div class="pfaq-item reveal">
+          <button class="pfaq-question" aria-expanded="false">
+            Is a credit card required for the free trial?
+            <span class="pfaq-icon"><iconify-icon icon="lucide:plus" style="font-size:13px"></iconify-icon></span>
+          </button>
+          <div class="pfaq-answer"><div class="pfaq-answer-inner">No. You can start your 15-day free trial without entering any payment information. You'll only be asked for billing details when you choose to upgrade.</div></div>
+        </div>
+        <div class="pfaq-item reveal">
+          <button class="pfaq-question" aria-expanded="false">
+            What happens when my free trial ends?
+            <span class="pfaq-icon"><iconify-icon icon="lucide:plus" style="font-size:13px"></iconify-icon></span>
+          </button>
+          <div class="pfaq-answer"><div class="pfaq-answer-inner">After 15 days, your account is paused until you choose a paid plan. Your data and campaigns are preserved — nothing is deleted.</div></div>
+        </div>
+        <div class="pfaq-item reveal">
+          <button class="pfaq-question" aria-expanded="false">
+            Are there any feature limitations on paid plans?
+            <span class="pfaq-icon"><iconify-icon icon="lucide:plus" style="font-size:13px"></iconify-icon></span>
+          </button>
+          <div class="pfaq-answer"><div class="pfaq-answer-inner">Never. Mailfrog never gates multi-step sequences or core campaign features behind higher tiers. Every paid plan gets full access to the platform — the difference is in AI actions, team seats, and add-on availability.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <section class="footer-section">
+    <footer class="footer-inner">
+      <h2 class="reveal">Start building your<br>outbound engine today.</h2>
+      <p class="footer-sub reveal">No credit card. No gatekeeping. Your first 15 days are on us.</p>
+      <div class="footer-btns reveal">
+        <a href="https://app.mailfrog.io/auth/signup" class="btn btn-primary btn-cta"><span class="btn-fill"></span>Start Free Trial</a>
+        <a href="https://app.mailfrog.io/auth/signup" class="btn-ghost-dark">Log in</a>
+      </div>
+      <div class="footer-bottom-bar">
+        <div class="footer-brand-compact">
+          <span class="logo-name">Mailfrog</span>
+          <p>An <a href="https://www.aventionmedia.com" target="_blank" rel="noopener" style="color:#a1a1aa;text-decoration:underline;text-underline-offset:3px">Avention Media</a> product</p>
+        </div>
+        <nav class="footer-nav-compact">
+          <a href="/">Home</a>
+          <a href="/#faq">FAQ</a>
+          <a href="/pricing">Pricing</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </nav>
+        <span class="footer-copy">© 2025 Mailfrog. All rights reserved.</span>
+      </div>
+    </footer>
+  </section>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => {
+      gsap.to(el, {
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+        y: 0, opacity: 1, duration: .7, ease: 'power3.out',
+      });
+    });
+    // FAQ
+    document.querySelectorAll('.pfaq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.pfaq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.pfaq-item.open').forEach(el => {
+          el.classList.remove('open');
+          el.querySelector('.pfaq-question').setAttribute('aria-expanded','false');
+        });
+        if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      });
+    });
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    function toggleMenu(open) {
+      hamburger.classList.toggle('open', open);
+      mobileMenu.style.display = open ? 'flex' : 'none';
+      requestAnimationFrame(() => mobileMenu.classList.toggle('open', open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    hamburger.addEventListener('click', () => toggleMenu(!mobileMenu.classList.contains('open')));
+    document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  </script>
+</body>
+</html>
